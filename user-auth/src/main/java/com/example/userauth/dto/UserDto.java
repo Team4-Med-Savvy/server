@@ -5,7 +5,7 @@ public class UserDto {
     private String name;
     private String email;
     private String password;
-    private Boolean isMerchant;
+    private boolean isMerchant;
     private Long points;
     private String username;
 
@@ -49,11 +49,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public Boolean getMerchant() {
+    public boolean getMerchant() {
         return isMerchant;
     }
 
-    public void setMerchant(Boolean merchant) {
+    public void setMerchant(boolean merchant) {
         isMerchant = merchant;
     }
 

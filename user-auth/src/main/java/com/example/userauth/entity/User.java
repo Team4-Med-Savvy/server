@@ -24,7 +24,8 @@ public class User {
     private String email;
     @NotNull
     private String password;
-    private Boolean isMerchant=false;
+    @NotNull
+    private boolean isMerchant;
     private Long points=new Long(0);
 
     public String getId() {
@@ -59,11 +60,11 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getMerchant() {
+    public boolean getMerchant() {
         return isMerchant;
     }
 
-    public void setMerchant(Boolean merchant) {
+    public void setMerchant(boolean merchant) {
         isMerchant = merchant;
     }
 
