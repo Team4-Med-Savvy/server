@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    UserServices userServices;
+    private UserServices userServices;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-    
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -37,7 +37,6 @@ public class UserController {
         }
         return jwtUtil.generateToken(authDto.getUsername());
     }
-
 
 
     @PostMapping("/register")
