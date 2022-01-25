@@ -1,20 +1,18 @@
 package com.example.userauth.dto;
 
-public class UserDto {
+public class ResponseDto {
     private String id;
     private String name;
-    private String email;
-    private String password;
     private boolean merchant;
     private Long points;
-    private String username;
+    private String token;
 
-    public String getUsername() {
-        return username;
+    public String getToken() {
+        return token;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getId() {
@@ -33,22 +31,6 @@ public class UserDto {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public boolean getMerchant() {
         return merchant;
     }
@@ -64,4 +46,6 @@ public class UserDto {
     public void setPoints(Long points) {
         this.points = points;
     }
+
+
 }
