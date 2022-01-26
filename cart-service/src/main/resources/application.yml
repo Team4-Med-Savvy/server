@@ -1,0 +1,22 @@
+server:
+  port: 8186
+
+spring:
+  application:
+    name: user-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: cart
+      repositories:
+        enabled: true
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8661/eureka
+    instances:
+      hostname: localhost

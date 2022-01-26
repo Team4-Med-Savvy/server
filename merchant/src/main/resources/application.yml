@@ -1,0 +1,15 @@
+server:
+  port: 8185
+
+spring:
+  application:
+    name: merchant
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8661/eureka
+    instances:
+      hostname: localhost
