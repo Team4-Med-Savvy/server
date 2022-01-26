@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Product {
+
     @Id
     @GeneratedValue(generator = "seq_gen_alias")
     @GenericGenerator(name="seq_gen_alias",strategy = "increment")
@@ -14,10 +15,28 @@ public class Product {
     private long price;
     private long stock;
     private String description;
+    private String productId;
+
 
     @ManyToOne
     @JoinColumn(name = "merchant_id", referencedColumnName = "id")
     private Merchant merchant;
+
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
     public long getId() {
         return id;

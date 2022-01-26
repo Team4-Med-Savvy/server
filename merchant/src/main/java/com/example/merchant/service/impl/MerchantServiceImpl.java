@@ -13,7 +13,7 @@ public class MerchantServiceImpl implements MerchantService {
     MerchantRepository merchantRepository;
 
     @Override
-    public Merchant select(Long id) {
+    public Merchant select(String id) {
         return merchantRepository.findById(id).get();
     }
 
@@ -23,7 +23,7 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         merchantRepository.deleteById(id);
     }
 }

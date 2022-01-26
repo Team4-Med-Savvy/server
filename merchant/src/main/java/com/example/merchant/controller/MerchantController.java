@@ -15,7 +15,7 @@ public class MerchantController {
     MerchantService merchantService;
 
     @GetMapping(value = "/{idFromMerchant}")
-    MerchantDto select(@PathVariable(value="idFromMerchant") Long id){
+    MerchantDto select(@PathVariable(value="idFromMerchant") String id){
         Merchant merchant=merchantService.select(id);
         MerchantDto merchantDto=createDTOFromEntity(merchant);
         return merchantDto;
