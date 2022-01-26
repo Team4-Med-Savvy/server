@@ -2,11 +2,12 @@ package com.example.product.service.feignservice;
 
 import com.example.product.dto.MerchantDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+
+import javax.ws.rs.Path;
 
 @FeignClient(name="merchant")
 public interface ProductFeignService {
-    @GetMapping("/merchant/{id}")
-    MerchantDto findById(@PathVariable String id);
+    @RequestMapping(value = "merchant/{id}", method = RequestMethod.GET)
+    MerchantDto findById(@PathVariable("id") String id);
 }

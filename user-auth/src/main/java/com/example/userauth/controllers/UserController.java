@@ -1,9 +1,11 @@
 package com.example.userauth.controllers;
 import com.example.userauth.dto.AuthDto;
+import com.example.userauth.dto.MerchantDto;
 import com.example.userauth.dto.ResponseDto;
 import com.example.userauth.dto.UserDto;
 import com.example.userauth.entity.User;
 import com.example.userauth.services.UserServices;
+import com.example.userauth.services.feignServices.MerchantFeignService;
 import com.example.userauth.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserServices userServices;
+
+    @Autowired
+    private MerchantFeignService merchantFeignService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -63,7 +68,11 @@ public class UserController {
 
     @PostMapping("/register")
     void save(@RequestBody UserDto userDto){
-        userServices.save(copyFromDTO(userDto));
+        User user=copyFromDTO(userDto);
+        userServices.save(user);
+        MerchantDto merchant=new MerchantDto(userServices.findByUsername(user.getEmail()).getId(),userDto.getName(),0,0);
+        merchantFeignService.save(merchant);
+
     }
 
     private User copyFromDTO(UserDto userDto){
@@ -74,6 +83,7 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPoints(userDto.getPoints());
         user.setEmail(userDto.getEmail());
+
         return user;
     }
 

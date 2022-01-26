@@ -28,11 +28,6 @@ public class MerchantController {
         merchantService.save(merchant);
     }
 
-    @DeleteMapping(value="/{idFromMerchant1}")
-    void delete(@PathVariable(value="idFromMerchant1") Long id){
-        merchantService.delete(id);
-    }
-
     public Merchant createEntityFromDto(MerchantDto dto){
 
         Merchant merchant=new Merchant();

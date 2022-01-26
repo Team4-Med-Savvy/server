@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
@@ -32,8 +33,8 @@ public class ProductController {
 
     @RequestMapping(method ={RequestMethod.POST,RequestMethod.PUT})
     void save(@RequestBody ProductDto productDto){
-        Product category=createEntityFromDto(productDto);
-        productServiceImpl.save(category);
+        Product product=createEntityFromDto(productDto);
+        productServiceImpl.save(product);
 
     }
 
@@ -42,6 +43,39 @@ public class ProductController {
         productServiceImpl.delete(id);
 
     }
+
+    @GetMapping(value = "recommend")
+    List<ProductDto> recommend()
+    {
+        List<ProductDto> productDtos=new ArrayList<>();
+        String cate[]={"Covid_essential","Surgicals","Skin_care","Pet_care","Ayurvedic_care"};
+
+        for(int i=0;i<5;i++)
+        {
+            List<ReponseDto> listprod=findProduct(cate[i]);
+            int size=listprod.size();
+
+            for(i=0;i<2;i++){
+            Random rand = new Random();
+            int rand_int = rand.nextInt(size);
+
+            ProductDto productDto=new ProductDto();
+            BeanUtils.copyProperties(listprod.get(rand_int),productDto);
+
+            List<MerchantDto> merchantDtoList=listprod.get(rand_int).getMerchantdto();
+            List<String> merchantid=new ArrayList<>();
+
+            for(i=0;i<merchantDtoList.size();i++){
+                merchantid.add(merchantDtoList.get(i).getId());
+            }
+            productDto.setMerchant(merchantid);
+            productDtos.add(productDto);
+
+            }
+        }
+        return  productDtos;
+    }
+
 
     @GetMapping(value = "/findlist/{id}")
     List<ReponseDto> findProduct(@PathVariable(value = "id") String id)
@@ -62,17 +96,21 @@ public class ProductController {
             List<MerchantDto> merchantlist=new ArrayList<>();
             for(int i=0;i<temp.getMerchant().size();i++){
 
+                System.out.println(temp.getMerchant().get(i));
                 MerchantDto merchantDto=productFeignService.findById(temp.getMerchant().get(i));
                 merchantlist.add(merchantDto);
             }
 
             reponseDto.setMerchantdto(merchantlist);
+            reponseDtos.add(reponseDto);
 
         }
         return reponseDtos;
     }
 
 
+
+    @GetMapping("/productdetail/{pid}/{mid}")
 
 
     Product createEntityFromDto(ProductDto productDto){

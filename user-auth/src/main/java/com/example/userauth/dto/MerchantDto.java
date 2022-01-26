@@ -1,10 +1,17 @@
-package com.example.merchant.dto;
+package com.example.userauth.dto;
 
 public class MerchantDto {
     private String id;
     private String name;
     private long total_sales;
     private long points;
+
+    public MerchantDto(String id,String name, long total_sales, long points) {
+        this.id=id;
+        this.name = name;
+        this.total_sales = total_sales;
+        this.points = points;
+    }
 
     public long getPoints() {
         return points;

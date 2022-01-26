@@ -29,6 +29,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(userServices);
     }
+
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();

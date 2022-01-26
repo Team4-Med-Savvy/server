@@ -16,9 +16,7 @@ public class Product {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-
-
+    @JoinColumn(name = "merchant_id", referencedColumnName = "id")
     private Merchant merchant;
 
     public long getId() {
