@@ -1,8 +1,11 @@
 package com.example.product.controller;
 
 
+import com.example.product.dto.MerchantDto;
 import com.example.product.dto.ProductDto;
+import com.example.product.dto.ReponseDto;
 import com.example.product.entity.Product;
+import com.example.product.service.feignservice.ProductFeignService;
 import com.example.product.service.impl.ProductServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,9 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductServiceImpl productServiceImpl;
+
+    @Autowired
+    ProductFeignService productFeignService;
 
 
     @GetMapping(value="/{id}")
@@ -38,17 +44,37 @@ public class ProductController {
     }
 
     @GetMapping(value = "/findlist/{id}")
-    List<ProductDto> findProduct(@PathVariable(value = "id") String id)
+    List<ReponseDto> findProduct(@PathVariable(value = "id") String id)
     {
-        List<ProductDto> productDtos=new ArrayList<>();
+//        List<ProductDto> productDtos=new ArrayList<>();
+        List<ReponseDto> reponseDtos=new ArrayList<>();
+
+
         Iterable<Product> products=productServiceImpl.findProduct(id);
 
         for(Product temp:products)
         {
-            productDtos.add(createDtoFromEntity(temp));
+//            productDtos.add(createDtoFromEntity(temp));
+
+            ReponseDto reponseDto=new ReponseDto();
+            BeanUtils.copyProperties(temp,reponseDto);
+
+            List<MerchantDto> merchantlist=new ArrayList<>();
+            for(int i=0;i<temp.getMerchant().size();i++){
+
+                MerchantDto merchantDto=productFeignService.findById(temp.getMerchant().get(i));
+                merchantlist.add(merchantDto);
+            }
+
+            reponseDto.setMerchantdto(merchantlist);
+
         }
-        return productDtos;
+        return reponseDtos;
     }
+
+
+
+
     Product createEntityFromDto(ProductDto productDto){
         Product product=new Product();
         BeanUtils.copyProperties(productDto,product);
