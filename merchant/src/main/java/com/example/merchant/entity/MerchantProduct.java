@@ -31,10 +31,10 @@ public class MerchantProduct {
     }
 
     @ManyToMany
-    @JoinTable(name="merchantproduct",joinColumns = {
-            @JoinColumn(name = "mid")},
+    @JoinTable(name="merchant_product",joinColumns = {
+            @JoinColumn(name = "merchant_id")},
             inverseJoinColumns = {
-                    @JoinColumn(name="pid")
+                    @JoinColumn(name="product_id")
             })
     private Set<Merchant> merchantSet;
 
