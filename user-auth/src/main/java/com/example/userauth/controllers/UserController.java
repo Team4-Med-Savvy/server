@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-//    @GetMapping("/{email}")
+//    @GetMapping()
 //    public ResponseDto getUserData(@PathVariable String email){
 //        User user = userServices.findByUsername(email);
 //        ResponseDto response=new ResponseDto();
@@ -56,8 +56,8 @@ public class UserController {
         res.setMerchant(user.getMerchant());
         res.setName(user.getName());
         res.setId(user.getId());
+        res.setEmail(user.getEmail());
         return res;
-
     }
 
 
