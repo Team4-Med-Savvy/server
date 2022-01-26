@@ -1,0 +1,15 @@
+server:
+  port: 8188
+
+spring:
+  application:
+    name: email
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8661/eureka
+    instances:
+      hostname: localhost
