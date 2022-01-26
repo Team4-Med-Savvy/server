@@ -5,6 +5,8 @@ public class ProductDto {
     private long price;
     private long stock;
     private String description;
+    private Long merchantId;
+
 
     public long getId() {
         return id;
@@ -37,4 +39,13 @@ public class ProductDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
 }

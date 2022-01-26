@@ -11,18 +11,24 @@ import javax.persistence.Table;
 @Table
 public class Merchant {
     @Id
-    @GeneratedValue(generator = "seq_gen_alias")
-    @GenericGenerator(name="seq_gen_alias",strategy = "increment")
-    private long id;
+    private String id;
     private String name;
-    private long ranking;
+    private long points;
     private long total_sales;
 
-    public long getId() {
+    public long getPoints() {
+        return points;
+    }
+
+    public void setPoints(long points) {
+        this.points = points;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -32,14 +38,6 @@ public class Merchant {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public long getRanking() {
-        return ranking;
-    }
-
-    public void setRanking(long ranking) {
-        this.ranking = ranking;
     }
 
     public long getTotal_sales() {
