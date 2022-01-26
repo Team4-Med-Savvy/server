@@ -1,5 +1,6 @@
 package com.example.cartservice.controller;
 
+import com.example.cartservice.Request.RequestDto;
 import com.example.cartservice.dto.CartDto;
 import com.example.cartservice.dto.MerchantDto;
 import com.example.cartservice.dto.Product;
@@ -59,6 +60,37 @@ public class CartController {
         return response;
     }
 
+    @PostMapping("/{email}")
+    void addProduct(@PathVariable("email") String email, @RequestBody RequestDto requestDto){
+        Cart cart=cartService.findByEmail(email);
+        for (Product prod :cart.getProductList()){
+            if(prod.getProductId().equals(requestDto.getId())){
+                prod.setQuantity(prod.getQuantity()+1);
+                break;
+            }else {
+                Product product=new Product(requestDto.getId(),1,requestDto.getMerchantId(),requestDto.getPrice());
+                cart.getProductList().add(product);
+            }
+
+        }
+        cartService.save(cart);
+    }
+
+    @PostMapping("/{email}")
+    void deleteProduct(@PathVariable("email") String email,@PathVariable("id") String id){
+        Cart cart=cartService.findByEmail(email);
+        for (Product prod :cart.getProductList()){
+            if(prod.getProductId().equals(id)){
+                if(prod.getQuantity()==0){
+                    cart.getProductList().remove(prod);
+                }else{
+                prod.setQuantity(prod.getQuantity()-1);
+                }
+                break;
+            }
+        }
+        cartService.save(cart);
+    }
 
     private Cart copyDtoToEntity(CartDto cartDto){
         Cart cart = new Cart();

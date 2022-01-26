@@ -6,6 +6,13 @@ public class Product {
     private String merchantId;
     private Long price;
 
+    public Product(String productId, int quantity, String merchantId, Long price) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.merchantId = merchantId;
+        this.price = price;
+    }
+
     public Long getPrice() {
         return price;
     }

@@ -14,7 +14,6 @@ public class ResponseProductDto {
     private String merchantId;
 
 
-
     public ResponseProductDto(String title, Long price, String email, int quantity, String category, String image, String name, long ranking, long total_sales, String merchantId) {
         this.title = title;
         this.price = price;
