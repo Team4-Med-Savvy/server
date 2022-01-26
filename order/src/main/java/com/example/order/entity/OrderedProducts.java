@@ -2,10 +2,7 @@ package com.example.order.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -15,10 +12,14 @@ public class OrderedProducts {
     @GeneratedValue(generator = "seq_gen_alias")
     @GenericGenerator(name = "seq_gen_alias",strategy = "increment")
     private Long id;
-    private Long orderId;
     private String productId;
     private Long quantity;
     private double amount;
+    private String merchantId;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Orders orders;
 
     public Long getId() {
         return id;
@@ -28,12 +29,20 @@ public class OrderedProducts {
         this.id = id;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Orders getOrders() {
+        return orders;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     public String getProductId() {
