@@ -1,11 +1,10 @@
-package com.example.cartservice.dto;
+package com.example.cartservice.response;
 
 import java.util.List;
 
-public class CartDto {
+public class ResponseDto {
     private String id;
     private String email;
-    private List<Product> productList;
 
     public String getId() {
         return id;
@@ -23,11 +22,14 @@ public class CartDto {
         this.email = email;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public List<ResponseProductDto> getProducts() {
+        return products;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setProducts(List<ResponseProductDto> products) {
+        this.products = products;
     }
+
+    private List<ResponseProductDto> products;
+
 }
