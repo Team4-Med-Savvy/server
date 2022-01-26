@@ -17,7 +17,6 @@ public class Product {
     private String description;
     private String productId;
 
-
     @ManyToOne
     @JoinColumn(name = "merchant_id", referencedColumnName = "id")
     private Merchant merchant;
