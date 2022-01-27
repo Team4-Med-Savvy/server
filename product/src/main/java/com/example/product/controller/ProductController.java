@@ -3,12 +3,9 @@ package com.example.product.controller;
 
 import com.example.product.RequestDto.RequestDto;
 import com.example.product.dto.*;
-import com.example.product.entity.Category;
 import com.example.product.entity.Product;
-import com.example.product.service.CategoryService;
 import com.example.product.service.ProductService;
 import com.example.product.service.feignservice.ProductFeignService;
-import com.example.product.service.impl.ProductServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -25,13 +22,10 @@ public class ProductController {
     ProductService productService;
 
     @Autowired
-    CategoryService categoryService;
-
-    @Autowired
     ProductFeignService productFeignService;
 
     @GetMapping(value="/{id}")
-    public Product select(@PathVariable(value = "id") String id){
+    private Product select(@PathVariable(value = "id") String id){
         return productService.select(id);
     }
 
@@ -49,10 +43,18 @@ public class ProductController {
         productService.save(product);
         saveMerchant(product,productDto);
     }
-    void saveMerchant(Product product,RequestDto productDto){
+
+    private void saveMerchant(Product product,RequestDto productDto){
         Product savedProduct=productService.findByTitle(product.getTitle());
         MerchantProductDto merchantProductDto = new MerchantProductDto(Math.round(productDto.getPrice()),productDto.getStock(),savedProduct.getId(),productDto.getMerchantId());
         productFeignService.save(merchantProductDto);
+    }
+
+    @PostMapping(value = "/edit/{pid}/{mid}")
+    void editMerchantList(@PathVariable(name = "pid") String pid,@PathVariable(name = "mid") String mid){
+        Product product=productService.select(pid);
+        product.getMerchant().add(mid);
+        productService.save(product);
     }
 
     @DeleteMapping(value = "/{id}")

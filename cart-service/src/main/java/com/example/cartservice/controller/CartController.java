@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
 @RequestMapping(value="/cart")
 public class CartController {
@@ -44,44 +45,53 @@ public class CartController {
     }
 
     @GetMapping(value="/email/{email}")
-    ResponseDto getCartByEmail(@PathVariable("email") String email){
+    ResponseDto getCartByEmail(@PathVariable(value="email") String email){
         Cart cart=cartService.findByEmail(email);
-        CartDto cartDto= copyEntityToDto(cart);
+        CartDto cartDto = copyEntityToDto(cart);
         ResponseDto response=new ResponseDto();
         List<ResponseProductDto> list = new ArrayList<>();
         for(int i=0;i<cartDto.getProductList().size();i++){
             Product product = cartDto.getProductList().get(i);
-            ProductDto productDto= productFeign.select(product.getProductId());
-            MerchantDto merchantDto=merchantFeign.select(product.getMerchantId());
-            ResponseProductDto productResponse=new ResponseProductDto(productDto.getTitle(),product.getPrice(), cartDto.getEmail(),product.getQuantity(),productDto.getCategory(),productDto.getImage(),merchantDto.getName(),merchantDto.getTotal_sales(),merchantDto.getPoints(),merchantDto.getId());
+            ProductDto productDto = productFeign.select(product.getProductId());
+            MerchantDto merchantDto = merchantFeign.select(product.getMerchantId());
+            ResponseProductDto productResponse=new ResponseProductDto(productDto.getTitle(), product.getPrice(), cartDto.getEmail(),product.getQuantity(),productDto.getCategory(),productDto.getImage(),merchantDto.getName(),merchantDto.getTotal_sales(),merchantDto.getPoints(),merchantDto.getId());
             list.add(productResponse);
         }
-        response.setProducts(list);
+        response.setEmail(cart.getEmail());
+        response.setId(cart.getId());
+        response.setProductList(list);
         return response;
     }
 
     @PostMapping("/{email}/inc")
-    void addProduct(@PathVariable("email") String email, @RequestBody RequestDto requestDto){
+    void addProduct(@PathVariable(value="email") String email, @RequestBody RequestDto requestDto){
         Cart cart=cartService.findByEmail(email);
+        List<Product> result=new ArrayList<>();
+        if (cart.getProductList().size()>0){
         for (Product prod :cart.getProductList()){
-            if(prod.getProductId().equals(requestDto.getId())){
-                prod.setQuantity(prod.getQuantity()+1);
-                break;
+            if(prod.getProductId().equals(requestDto.getProductId())){
+                Product product=new Product(prod.getProductId(),prod.getQuantity()+1,prod.getMerchantId(),prod.getPrice());
+                result.add(product);
             }else {
-                Product product=new Product(requestDto.getId(),1,requestDto.getMerchantId(),requestDto.getPrice());
-                cart.getProductList().add(product);
+                Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
+                result.add(product);
             }
-
         }
+        }else{
+            Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
+            result.add(product);
+        }
+        cart.setProductList( result );
+        System.out.println(result);
         cartService.save(cart);
     }
 
-    @PostMapping("/{email}/dec")
-    void deleteProduct(@PathVariable("email") String email,@PathVariable("id") String id){
+    @PostMapping("/{email}/{id}/dec")
+    void deleteProduct(@PathVariable(value="email") String email,@PathVariable(value = "id") String id){
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){
             if(prod.getProductId().equals(id)){
-                if(prod.getQuantity()==0){
+                if(prod.getQuantity()==1){
                     cart.getProductList().remove(prod);
                 }else{
                 prod.setQuantity(prod.getQuantity()-1);

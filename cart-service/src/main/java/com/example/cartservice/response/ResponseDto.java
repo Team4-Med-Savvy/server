@@ -5,7 +5,7 @@ import java.util.List;
 public class ResponseDto {
     private String id;
     private String email;
-    private List<ResponseProductDto> products;
+    private List<ResponseProductDto> productList;
 
 
     public String getId() {
@@ -24,13 +24,12 @@ public class ResponseDto {
         this.email = email;
     }
 
-    public List<ResponseProductDto> getProducts() {
-        return products;
+    public List<ResponseProductDto> getProductList() {
+        return productList;
     }
 
-    public void setProducts(List<ResponseProductDto> products) {
-        this.products = products;
+    public void setProductList(List<ResponseProductDto> productList) {
+        this.productList = productList;
     }
-
 
 }
