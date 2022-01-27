@@ -1,8 +1,12 @@
 package com.example.product.controller;
 
 
+import com.example.product.RequestDto.RequestDto;
 import com.example.product.dto.*;
+import com.example.product.entity.Category;
 import com.example.product.entity.Product;
+import com.example.product.service.CategoryService;
+import com.example.product.service.ProductService;
 import com.example.product.service.feignservice.ProductFeignService;
 import com.example.product.service.impl.ProductServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -18,26 +22,42 @@ import java.util.Random;
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
-    ProductServiceImpl productServiceImpl;
+    ProductService productService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Autowired
     ProductFeignService productFeignService;
 
     @GetMapping(value="/{id}")
     public Product select(@PathVariable(value = "id") String id){
-        return productServiceImpl.select(id);
+        return productService.select(id);
     }
 
     @RequestMapping(method ={RequestMethod.POST,RequestMethod.PUT})
-    void save(@RequestBody ProductDto productDto){
-        Product product=createEntityFromDto(productDto);
-        productServiceImpl.save(product);
-
+    void save(@RequestBody RequestDto productDto){
+        Product product=new Product();
+        product.setCategory(productDto.getCategory());
+        product.setDescription(productDto.getDescription());
+        product.setImage(productDto.getImage());
+        product.setTitle(productDto.getTitle());
+        List<String> merchant=new ArrayList<>();
+        merchant.add(productDto.getMerchantId());
+        product.setPrice(productDto.getPrice());
+        product.setMerchant(merchant);
+        productService.save(product);
+        saveMerchant(product,productDto);
+    }
+    void saveMerchant(Product product,RequestDto productDto){
+        Product savedProduct=productService.findByTitle(product.getTitle());
+        MerchantProductDto merchantProductDto = new MerchantProductDto(Math.round(productDto.getPrice()),productDto.getStock(),savedProduct.getId(),productDto.getMerchantId());
+        productFeignService.save(merchantProductDto);
     }
 
     @DeleteMapping(value = "/{id}")
     void delete(@PathVariable(value = "id") String id){
-        productServiceImpl.delete(id);
+        productService.delete(id);
 
     }
 
@@ -84,7 +104,7 @@ public class ProductController {
         List<ReponseDto> reponseDtos=new ArrayList<>();
 
 
-        Iterable<Product> products=productServiceImpl.findProduct(id);
+        Iterable<Product> products=productService.findProduct(id);
 
         for(Product temp:products)
         {

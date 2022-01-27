@@ -2,6 +2,7 @@ package com.example.product.controller;
 
 import com.example.product.dto.CategoryDto;
 import com.example.product.entity.Category;
+import com.example.product.service.CategoryService;
 import com.example.product.service.impl.CategoryServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +17,22 @@ import java.lang.reflect.Method;
 public class CategoryController {
 
     @Autowired
-    CategoryServiceImpl categoryServiceimpl;
+    CategoryService categoryService;
 
-    @GetMapping(value="/{id}")
-    public Category select(@PathVariable(value = "id") String id){
-        return categoryServiceimpl.select(id);
+    @GetMapping(value="/{name}")
+    public Category select(@PathVariable(value = "name") String name){
+        return categoryService.findByName(name);
     }
 
     @RequestMapping(method ={RequestMethod.POST,RequestMethod.PUT})
     void save(@RequestBody CategoryDto categoryDto){
         Category category=createEntityFromDto(categoryDto);
-        categoryServiceimpl.save(category);
-
+        categoryService.save(category);
     }
 
     @DeleteMapping(value = "/{id}")
     void  delete(@PathVariable(value = "id") String id){
-        categoryServiceimpl.delete(id);
+        categoryService.delete(id);
 
     }
 

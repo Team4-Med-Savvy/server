@@ -13,8 +13,8 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     @Override
-    public Category select(String id) {
-        return categoryRepository.findById(id).get();
+    public Category findByName(String name) {
+        return categoryRepository.findByName(name);
     }
 
     @Override
