@@ -4,6 +4,15 @@ public class EmailDto {
     private String toAddress;
     private String subject;
     private String message;
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getToAddress() {
         return toAddress;

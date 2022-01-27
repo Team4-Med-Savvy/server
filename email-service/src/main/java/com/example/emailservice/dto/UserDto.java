@@ -1,4 +1,4 @@
-package com.example.userauth.dto;
+package com.example.emailservice.dto;
 
 public class UserDto {
     private String id;
