@@ -60,7 +60,7 @@ public class CartController {
         return response;
     }
 
-    @PostMapping("/{email}")
+    @PostMapping("/{email}/inc")
     void addProduct(@PathVariable("email") String email, @RequestBody RequestDto requestDto){
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){
@@ -76,7 +76,7 @@ public class CartController {
         cartService.save(cart);
     }
 
-    @PostMapping("/{email}")
+    @PostMapping("/{email}/dec")
     void deleteProduct(@PathVariable("email") String email,@PathVariable("id") String id){
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){
