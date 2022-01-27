@@ -6,10 +6,19 @@ public class ProductDto {
     private String id;
     private String title;
     private Double price;
+    private String description;
     private String category;
     private List<String> merchant;
     private String image;
     private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getDescription() {
         return description;

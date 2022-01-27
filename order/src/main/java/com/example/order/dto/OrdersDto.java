@@ -1,13 +1,11 @@
 package com.example.order.dto;
 
-import java.sql.Timestamp;
-
 public class OrdersDto {
-
 
     private Long id;
     private String userId;
-    private Timestamp timeStamp;
+    private String timeStamp;
+    private long total;
 
     public Long getId() {
         return id;
@@ -25,11 +23,20 @@ public class OrdersDto {
         this.userId = userId;
     }
 
-    public Timestamp getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Timestamp timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
+    }
+
 }

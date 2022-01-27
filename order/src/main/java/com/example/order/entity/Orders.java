@@ -17,8 +17,8 @@ public class Orders {
     @GenericGenerator(name = "seq_gen_alias",strategy = "increment")
     private Long id;
     private String userId;
-    private Timestamp timeStamp;
-
+    private String timeStamp;
+    private Long total;
     public Long getId() {
         return id;
     }
@@ -35,11 +35,19 @@ public class Orders {
         this.userId = userId;
     }
 
-    public Timestamp getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Timestamp timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
     }
 }

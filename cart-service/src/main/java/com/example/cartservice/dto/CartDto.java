@@ -3,16 +3,16 @@ package com.example.cartservice.dto;
 import java.util.List;
 
 public class CartDto {
-    private String Id;
+    private String id;
     private String email;
     private List<Product> productList;
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getEmail() {

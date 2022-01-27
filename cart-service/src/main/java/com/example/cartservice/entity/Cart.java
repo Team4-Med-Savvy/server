@@ -10,18 +10,18 @@ import java.util.List;
 @Document
 public class Cart {
     @Id
-    private String Id;
+    private String id;
 
     @Indexed(unique=true)
     private String email;
     private List<Product> productList;
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getEmail() {

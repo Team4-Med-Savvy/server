@@ -15,9 +15,9 @@ public class OrderProductsController {
     OrderedProductsService orderedProductsService;
 
     @GetMapping(value = "/{id}")
-    OrderedProductsDto select(@PathVariable("id") Long id){
-        OrderedProducts orderedProducts = orderedProductsService.select(id);
-        OrderedProductsDto orderedProductsDto = new OrderedProductsDto();
+    OrderedProductsDto findAnOrder(@PathVariable("id") Long id){
+        OrderedProducts orderedProducts=orderedProductsService.select(id);
+        OrderedProductsDto orderedProductsDto=new OrderedProductsDto();
         BeanUtils.copyProperties(orderedProducts,orderedProductsDto);
         return orderedProductsDto;
     }

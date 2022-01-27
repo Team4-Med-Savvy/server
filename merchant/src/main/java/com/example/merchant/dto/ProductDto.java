@@ -5,8 +5,16 @@ public class ProductDto {
     private long price;
     private long stock;
     private String description;
-    private Long merchantId;
+    private String merchantId;
+    private String productId;
 
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
     public long getId() {
         return id;
@@ -40,12 +48,11 @@ public class ProductDto {
         this.description = description;
     }
 
-    public Long getMerchantId() {
+    public String getMerchantId() {
         return merchantId;
     }
 
-    public void setMerchantId(Long merchantId) {
+    public void setMerchantId(String merchantId) {
         this.merchantId = merchantId;
     }
-
 }
