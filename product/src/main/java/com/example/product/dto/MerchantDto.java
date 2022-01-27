@@ -23,11 +23,11 @@ public class MerchantDto {
         this.name = name;
     }
 
-    public long getRanking() {
+    public long getPoints() {
         return points;
     }
 
-    public void setRanking(long points) {
+    public void setPoints(long points) {
         this.points = points;
     }
 

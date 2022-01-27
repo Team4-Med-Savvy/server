@@ -2,6 +2,7 @@ package com.example.product.controller;
 
 
 import com.example.product.dto.MerchantDto;
+import com.example.product.dto.ProductDetailDto;
 import com.example.product.dto.ProductDto;
 import com.example.product.dto.ReponseDto;
 import com.example.product.entity.Product;
@@ -44,10 +45,10 @@ public class ProductController {
 
     }
 
-    @GetMapping(value = "recommend")
-    List<ProductDto> recommend()
+    @GetMapping(value = "/recommend")
+    List<ReponseDto> recommend()
     {
-        List<ProductDto> productDtos=new ArrayList<>();
+        List<ReponseDto> productDtos=new ArrayList<>();
         String cate[]={"Covid_essential","Surgicals","Skin_care","Pet_care","Ayurvedic_care"};
 
         for(int i=0;i<5;i++)
@@ -55,22 +56,25 @@ public class ProductController {
             List<ReponseDto> listprod=findProduct(cate[i]);
             int size=listprod.size();
 
+            if(size>0){
+
             for(i=0;i<2;i++){
             Random rand = new Random();
-            int rand_int = rand.nextInt(size);
+                int rand_int = rand.nextInt(size);
 
-            ProductDto productDto=new ProductDto();
+            ReponseDto productDto=new ReponseDto();
             BeanUtils.copyProperties(listprod.get(rand_int),productDto);
-
-            List<MerchantDto> merchantDtoList=listprod.get(rand_int).getMerchantdto();
-            List<String> merchantid=new ArrayList<>();
-
-            for(i=0;i<merchantDtoList.size();i++){
-                merchantid.add(merchantDtoList.get(i).getId());
-            }
-            productDto.setMerchant(merchantid);
+//
+//            List<MerchantDto> merchantDtoList=listprod.get(rand_int).getMerchantdto();
+//            List<String> merchantid=new ArrayList<>();
+//
+//            for(i=0;i<merchantDtoList.size();i++){
+//                merchantid.add(merchantDtoList.get(i).getId());
+//            }
+//            productDto.setMerchant(merchantid);
             productDtos.add(productDto);
 
+            }
             }
         }
         return  productDtos;
@@ -96,7 +100,7 @@ public class ProductController {
             List<MerchantDto> merchantlist=new ArrayList<>();
             for(int i=0;i<temp.getMerchant().size();i++){
 
-                System.out.println(temp.getMerchant().get(i));
+               // System.out.println(temp.getMerchant().get(i));
                 MerchantDto merchantDto=productFeignService.findById(temp.getMerchant().get(i));
                 merchantlist.add(merchantDto);
             }
@@ -111,6 +115,18 @@ public class ProductController {
 
 
     @GetMapping("/productdetail/{pid}/{mid}")
+    ProductDetailDto finddetail(@PathVariable(value = "pid") String pid,@PathVariable(value = "mid") String mid){
+
+        ProductDetailDto productDetailDto=new ProductDetailDto();
+        ProductDto product=createDtoFromEntity(select(pid));
+        productDetailDto.setName(product.getTitle());
+        productDetailDto.setImageUrl(product.getImage());
+        productDetailDto.setDescription(product.getDescription());
+
+
+        return  productDetailDto;
+
+    }
 
 
     Product createEntityFromDto(ProductDto productDto){

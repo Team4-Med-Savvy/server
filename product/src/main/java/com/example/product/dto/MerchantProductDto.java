@@ -4,7 +4,6 @@ public class MerchantProductDto {
     private long id;
     private long price;
     private long stock;
-    private String description;
     private String productId;
     private String merchantId;
 
@@ -48,11 +47,6 @@ public class MerchantProductDto {
         this.stock = stock;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+
 }
