@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping(value = "orderedproducts")
 public class OrderProductsController {

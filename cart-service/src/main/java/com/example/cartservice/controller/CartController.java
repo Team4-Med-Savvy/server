@@ -46,21 +46,23 @@ public class CartController {
     @GetMapping(value="/email/{email}")
     ResponseDto getCartByEmail(@PathVariable("email") String email){
         Cart cart=cartService.findByEmail(email);
-        CartDto cartDto= copyEntityToDto(cart);
+        CartDto cartDto = copyEntityToDto(cart);
         ResponseDto response=new ResponseDto();
         List<ResponseProductDto> list = new ArrayList<>();
         for(int i=0;i<cartDto.getProductList().size();i++){
             Product product = cartDto.getProductList().get(i);
-            ProductDto productDto= productFeign.select(product.getProductId());
-            MerchantDto merchantDto=merchantFeign.select(product.getMerchantId());
-            ResponseProductDto productResponse=new ResponseProductDto(productDto.getTitle(),product.getPrice(), cartDto.getEmail(),product.getQuantity(),productDto.getCategory(),productDto.getImage(),merchantDto.getName(),merchantDto.getTotal_sales(),merchantDto.getPoints(),merchantDto.getId());
+            ProductDto productDto = productFeign.select(product.getProductId());
+            MerchantDto merchantDto = merchantFeign.select(product.getMerchantId());
+            ResponseProductDto productResponse=new ResponseProductDto(productDto.getTitle(), product.getPrice(), cartDto.getEmail(),product.getQuantity(),productDto.getCategory(),productDto.getImage(),merchantDto.getName(),merchantDto.getTotal_sales(),merchantDto.getPoints(),merchantDto.getId());
             list.add(productResponse);
         }
-        response.setProducts(list);
+        response.setEmail(cart.getEmail());
+        response.setId(cart.getId());
+        response.setProductList(list);
         return response;
     }
 
-    @PostMapping("/{email}")
+    @PostMapping("/{email}/inc")
     void addProduct(@PathVariable("email") String email, @RequestBody RequestDto requestDto){
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){
@@ -76,7 +78,7 @@ public class CartController {
         cartService.save(cart);
     }
 
-    @PostMapping("/{email}")
+    @PostMapping("/{email}/dec")
     void deleteProduct(@PathVariable("email") String email,@PathVariable("id") String id){
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){

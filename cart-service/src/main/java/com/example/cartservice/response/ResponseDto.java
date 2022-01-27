@@ -22,14 +22,14 @@ public class ResponseDto {
         this.email = email;
     }
 
-    public List<ResponseProductDto> getProducts() {
-        return products;
+    public List<ResponseProductDto> getProductList() {
+        return productList;
     }
 
-    public void setProducts(List<ResponseProductDto> products) {
-        this.products = products;
+    public void setProductList(List<ResponseProductDto> productList) {
+        this.productList = productList;
     }
 
-    private List<ResponseProductDto> products;
+    private List<ResponseProductDto> productList;
 
 }

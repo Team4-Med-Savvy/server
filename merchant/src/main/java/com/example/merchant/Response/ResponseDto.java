@@ -8,7 +8,7 @@ public class ResponseDto {
     private String name;
     private long total_sales;
     private long points;
-    List<ProductDto> products;
+    List<ResponseProductDto> products;
 
     public String getName() {
         return name;
@@ -34,11 +34,11 @@ public class ResponseDto {
         this.points = points;
     }
 
-    public List<ProductDto> getProducts() {
+    public List<ResponseProductDto> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDto> products) {
+    public void setProducts(List<ResponseProductDto> products) {
         this.products = products;
     }
 }

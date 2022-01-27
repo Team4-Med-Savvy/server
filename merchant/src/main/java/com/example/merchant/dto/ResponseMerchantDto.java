@@ -3,10 +3,19 @@ package com.example.merchant.dto;
 import javax.swing.text.Document;
 
 public class ResponseMerchantDto {
+    private Long id;
     private Double price;
     private String merchantId;
-    private String prodcutId;
+    private String productId;
     private long stock;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public long getStock() {
         return stock;
@@ -32,11 +41,11 @@ public class ResponseMerchantDto {
         this.merchantId = merchantId;
     }
 
-    public String getProdcutId() {
-        return prodcutId;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setProdcutId(String prodcutId) {
-        this.prodcutId = prodcutId;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }
