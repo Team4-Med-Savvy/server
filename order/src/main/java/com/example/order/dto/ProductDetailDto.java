@@ -1,12 +1,19 @@
-package com.example.product.dto;
+package com.example.order.dto;
 
 public class ProductDetailDto {
     private String name;
     private Double price;
     private String description;
     private String imageUrl;
+    private long merchantStock;
 
+    public long getMerchantStock() {
+        return merchantStock;
+    }
 
+    public void setMerchantStock(long merchantStock) {
+        this.merchantStock = merchantStock;
+    }
 
     public String getName() {
         return name;

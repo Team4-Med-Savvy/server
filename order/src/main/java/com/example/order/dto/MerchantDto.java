@@ -1,4 +1,4 @@
-package com.example.product.dto;
+package com.example.order.dto;
 
 
 public class MerchantDto {
