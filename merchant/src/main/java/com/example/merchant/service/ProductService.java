@@ -9,5 +9,6 @@ public interface ProductService {
     void save(Product product);
     void delete(Long id);
     List<Product> findByMerchantId(String id);
+    Iterable<Product> findall();
 
 }

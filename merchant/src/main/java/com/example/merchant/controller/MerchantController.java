@@ -55,6 +55,7 @@ public class MerchantController {
         merchantService.save(merchant);
     }
 
+
     public Merchant createEntityFromDto(MerchantDto dto){
 
         Merchant merchant=new Merchant();

@@ -1,20 +1,12 @@
 package com.example.product.dto;
 
 public class ProductDetailDto {
-    private String id;
     private String name;
     private Double price;
     private String description;
     private String imageUrl;
 
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

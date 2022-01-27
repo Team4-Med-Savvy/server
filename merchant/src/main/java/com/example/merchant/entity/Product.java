@@ -12,7 +12,7 @@ public class Product {
     @GeneratedValue(generator = "seq_gen_alias")
     @GenericGenerator(name="seq_gen_alias",strategy = "increment")
     private long id;
-    private long price;
+    private Double price;
     private long stock;
     private String description;
     private String productId;
@@ -45,11 +45,11 @@ public class Product {
         this.id = id;
     }
 
-    public long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
