@@ -16,18 +16,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping(value = "order")
 public class OrderController {
 
     @Autowired
-    OrdersService orderService;
+    private OrdersService orderService;
 
     @Autowired
-    EmailFeign emailFeign;
+    private EmailFeign emailFeign;
 
     @Autowired
-    ProductFeign productFeign;
+    private ProductFeign productFeign;
 
     @GetMapping(value = "/user/{id}")
     List<OrdersDto> findUserOrders(@PathVariable("id") String id){
