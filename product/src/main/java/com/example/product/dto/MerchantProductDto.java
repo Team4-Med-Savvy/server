@@ -7,6 +7,13 @@ public class MerchantProductDto {
     private String productId;
     private String merchantId;
 
+    public MerchantProductDto(long price, long stock, String productId, String merchantId) {
+        this.price = price;
+        this.stock = stock;
+        this.productId = productId;
+        this.merchantId = merchantId;
+    }
+
     public String getProductId() {
         return productId;
     }

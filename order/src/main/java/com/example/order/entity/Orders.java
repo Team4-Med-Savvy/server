@@ -19,6 +19,7 @@ public class Orders {
     private String userId;
     private String timeStamp;
     private Long total;
+
     public Long getId() {
         return id;
     }
