@@ -66,16 +66,23 @@ public class CartController {
     @PostMapping("/{email}/inc")
     void addProduct(@PathVariable(value="email") String email, @RequestBody RequestDto requestDto){
         Cart cart=cartService.findByEmail(email);
+        List<Product> result=new ArrayList<>();
+        if (cart.getProductList().size()>0){
         for (Product prod :cart.getProductList()){
             if(prod.getProductId().equals(requestDto.getProductId())){
-                prod.setQuantity(prod.getQuantity()+1);
-                break;
+                Product product=new Product(prod.getProductId(),prod.getQuantity()+1,prod.getMerchantId(),prod.getPrice());
+                result.add(product);
             }else {
                 Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
-                cart.getProductList().add(product);
+                result.add(product);
             }
-
         }
+        }else{
+            Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
+            result.add(product);
+        }
+        cart.setProductList( result );
+        System.out.println(result);
         cartService.save(cart);
     }
 
@@ -84,7 +91,7 @@ public class CartController {
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){
             if(prod.getProductId().equals(id)){
-                if(prod.getQuantity()==0){
+                if(prod.getQuantity()==1){
                     cart.getProductList().remove(prod);
                 }else{
                 prod.setQuantity(prod.getQuantity()-1);
