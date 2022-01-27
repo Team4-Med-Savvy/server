@@ -38,6 +38,8 @@ public class ProductController {
         productService.save(product);
     }
 
+
+
     @DeleteMapping(value = "/{idFromProduct}")
     void delete(@PathVariable(value = "idFromProduct") Long id)
     {
@@ -83,6 +85,7 @@ public class ProductController {
     public Product createEntityFromDto(ProductDto dto){
         Product product=new Product();
         BeanUtils.copyProperties(dto,product);
+        System.out.println(dto.getMerchantId());
         product.setMerchant(merchantService.select(dto.getMerchantId()));
         return product;
     }
