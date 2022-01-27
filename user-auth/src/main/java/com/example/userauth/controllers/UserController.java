@@ -14,6 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
@@ -45,8 +48,26 @@ public class UserController {
 //        return response;
 //    }
 
+    @PostMapping("/extract")
+    public ResponseDto extract(@RequestBody ResponseDto requestDto){
+        if(!jwtUtil.isTokenExpired(requestDto.getToken())){
+            String username=jwtUtil.extractUsername(requestDto.getToken());
+            User user;
+            user = userServices.findByUsername(username);
+            ResponseDto res= new ResponseDto();
+            res.setToken(jwtUtil.generateToken(user.getEmail()));
+            res.setPoints(user.getPoints());
+            res.setMerchant(user.getMerchant());
+            res.setName(user.getName());
+            res.setId(user.getId());
+            res.setEmail(user.getEmail());
+            return res;
+        }
+        return null;
+    }
+
     @GetMapping("/getuser/{id}")
-    public UserDto getUser(@PathVariable(name = "id") String id){
+    public UserDto getUser(@PathVariable(value="id") String id){
         User user=userServices.select(id);
         UserDto userDto=new UserDto();
         BeanUtils.copyProperties(user,userDto);
