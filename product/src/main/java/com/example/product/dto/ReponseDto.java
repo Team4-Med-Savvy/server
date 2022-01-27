@@ -2,23 +2,13 @@ package com.example.product.dto;
 
 import java.util.List;
 
-public class ProductDto {
+public class ReponseDto {
     private String id;
     private String title;
     private Double price;
-    private String description;
     private String category;
-    private List<String> merchant;
+    private List<MerchantDto> merchantdto;
     private String image;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 
     public String getId() {
         return id;
@@ -52,12 +42,12 @@ public class ProductDto {
         this.category = category;
     }
 
-    public List<String> getMerchant() {
-        return merchant;
+    public List<MerchantDto> getMerchantdto() {
+        return merchantdto;
     }
 
-    public void setMerchant(List<String> merchant) {
-        this.merchant = merchant;
+    public void setMerchantdto(List<MerchantDto> merchantdto) {
+        this.merchantdto = merchantdto;
     }
 
     public String getImage() {

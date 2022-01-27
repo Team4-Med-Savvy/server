@@ -1,8 +1,12 @@
 package com.example.product.controller;
 
 
+import com.example.product.dto.MerchantDto;
+import com.example.product.dto.ProductDetailDto;
 import com.example.product.dto.ProductDto;
+import com.example.product.dto.ReponseDto;
 import com.example.product.entity.Product;
+import com.example.product.service.feignservice.ProductFeignService;
 import com.example.product.service.impl.ProductServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
@@ -17,6 +22,9 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductServiceImpl productServiceImpl;
+
+    @Autowired
+    ProductFeignService productFeignService;
 
 
     @GetMapping(value="/{id}")
@@ -26,8 +34,8 @@ public class ProductController {
 
     @RequestMapping(method ={RequestMethod.POST,RequestMethod.PUT})
     void save(@RequestBody ProductDto productDto){
-        Product category=createEntityFromDto(productDto);
-        productServiceImpl.save(category);
+        Product product=createEntityFromDto(productDto);
+        productServiceImpl.save(product);
 
     }
 
@@ -37,18 +45,90 @@ public class ProductController {
 
     }
 
-    @GetMapping(value = "/findlist/{id}")
-    List<ProductDto> findProduct(@PathVariable(value = "id") String id)
+    @GetMapping(value = "/recommend")
+    List<ReponseDto> recommend()
     {
-        List<ProductDto> productDtos=new ArrayList<>();
+        List<ReponseDto> productDtos=new ArrayList<>();
+        String cate[]={"Covid_essential","Surgicals","Skin_care","Personal_care","Ayurvedic_care"};
+
+        for(int i=0;i<5;i++)
+        {
+            List<ReponseDto> listprod=findProduct(cate[i]);
+            int size=listprod.size();
+
+            if(size>0){
+
+            for(int j=0;j<2;j++){
+            Random rand = new Random();
+                int rand_int = rand.nextInt(size);
+
+            ReponseDto productDto=new ReponseDto();
+            BeanUtils.copyProperties(listprod.get(rand_int),productDto);
+//
+//            List<MerchantDto> merchantDtoList=listprod.get(rand_int).getMerchantdto();
+//            List<String> merchantid=new ArrayList<>();
+//
+//            for(i=0;i<merchantDtoList.size();i++){
+//                merchantid.add(merchantDtoList.get(i).getId());
+//            }
+//            productDto.setMerchant(merchantid);
+            productDtos.add(productDto);
+
+            }
+            }
+        }
+        return  productDtos;
+    }
+
+
+    @GetMapping(value = "/findlist/{id}")
+    List<ReponseDto> findProduct(@PathVariable(value = "id") String id)
+    {
+//        List<ProductDto> productDtos=new ArrayList<>();
+        List<ReponseDto> reponseDtos=new ArrayList<>();
+
+
         Iterable<Product> products=productServiceImpl.findProduct(id);
 
         for(Product temp:products)
         {
-            productDtos.add(createDtoFromEntity(temp));
+//            productDtos.add(createDtoFromEntity(temp));
+
+            ReponseDto reponseDto=new ReponseDto();
+            BeanUtils.copyProperties(temp,reponseDto);
+
+            List<MerchantDto> merchantlist=new ArrayList<>();
+            for(int i=0;i<temp.getMerchant().size();i++){
+
+               // System.out.println(temp.getMerchant().get(i));
+                MerchantDto merchantDto=productFeignService.findById(temp.getMerchant().get(i));
+                merchantlist.add(merchantDto);
+            }
+
+            reponseDto.setMerchantdto(merchantlist);
+            reponseDtos.add(reponseDto);
+
         }
-        return productDtos;
+        return reponseDtos;
     }
+
+
+
+    @GetMapping("/productdetail/{pid}/{mid}")
+    ProductDetailDto finddetail(@PathVariable(value = "pid") String pid,@PathVariable(value = "mid") String mid){
+
+        ProductDetailDto productDetailDto=new ProductDetailDto();
+        ProductDto product=createDtoFromEntity(select(pid));
+        productDetailDto.setName(product.getTitle());
+        productDetailDto.setImageUrl(product.getImage());
+        productDetailDto.setDescription(product.getDescription());
+
+
+        return  productDetailDto;
+
+    }
+
+
     Product createEntityFromDto(ProductDto productDto){
         Product product=new Product();
         BeanUtils.copyProperties(productDto,product);

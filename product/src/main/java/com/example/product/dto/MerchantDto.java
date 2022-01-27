@@ -2,16 +2,16 @@ package com.example.product.dto;
 
 
 public class MerchantDto {
-    private long id;
+    private String id;
     private String name;
-    private long ranking;
+    private long points;
     private long total_sales;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -23,12 +23,12 @@ public class MerchantDto {
         this.name = name;
     }
 
-    public long getRanking() {
-        return ranking;
+    public long getPoints() {
+        return points;
     }
 
-    public void setRanking(long ranking) {
-        this.ranking = ranking;
+    public void setPoints(long points) {
+        this.points = points;
     }
 
     public long getTotal_sales() {
