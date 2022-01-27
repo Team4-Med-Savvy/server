@@ -61,14 +61,6 @@ public class ProductController {
 
             ReponseDto productDto=new ReponseDto();
             BeanUtils.copyProperties(listprod.get(rand_int),productDto);
-//
-//            List<MerchantDto> merchantDtoList=listprod.get(rand_int).getMerchantdto();
-//            List<String> merchantid=new ArrayList<>();
-//
-//            for(i=0;i<merchantDtoList.size();i++){
-//                merchantid.add(merchantDtoList.get(i).getId());
-//            }
-//            productDto.setMerchant(merchantid);
             productDtos.add(productDto);
 
             }
