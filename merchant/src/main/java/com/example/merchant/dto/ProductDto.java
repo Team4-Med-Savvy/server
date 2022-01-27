@@ -2,7 +2,7 @@ package com.example.merchant.dto;
 
 public class ProductDto {
     private long id;
-    private long price;
+    private Double price;
     private long stock;
     private String description;
     private String merchantId;
@@ -24,11 +24,11 @@ public class ProductDto {
         this.id = id;
     }
 
-    public long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

@@ -1,10 +1,7 @@
 package com.example.product.controller;
 
 
-import com.example.product.dto.MerchantDto;
-import com.example.product.dto.ProductDetailDto;
-import com.example.product.dto.ProductDto;
-import com.example.product.dto.ReponseDto;
+import com.example.product.dto.*;
 import com.example.product.entity.Product;
 import com.example.product.service.feignservice.ProductFeignService;
 import com.example.product.service.impl.ProductServiceImpl;
@@ -26,7 +23,6 @@ public class ProductController {
     @Autowired
     ProductFeignService productFeignService;
 
-
     @GetMapping(value="/{id}")
     public Product select(@PathVariable(value = "id") String id){
         return productServiceImpl.select(id);
@@ -40,7 +36,7 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "/{id}")
-    void  delete(@PathVariable(value = "id") String id){
+    void delete(@PathVariable(value = "id") String id){
         productServiceImpl.delete(id);
 
     }
@@ -117,11 +113,15 @@ public class ProductController {
     @GetMapping("/productdetail/{pid}/{mid}")
     ProductDetailDto finddetail(@PathVariable(value = "pid") String pid,@PathVariable(value = "mid") String mid){
 
+        ResponseMerchantDto response=productFeignService.findProductPrice(pid,mid);
+
         ProductDetailDto productDetailDto=new ProductDetailDto();
         ProductDto product=createDtoFromEntity(select(pid));
         productDetailDto.setName(product.getTitle());
         productDetailDto.setImageUrl(product.getImage());
         productDetailDto.setDescription(product.getDescription());
+        productDetailDto.setPrice(response.getPrice());
+        productDetailDto.setMerchantStock(response.getStock());
 
 
         return  productDetailDto;
