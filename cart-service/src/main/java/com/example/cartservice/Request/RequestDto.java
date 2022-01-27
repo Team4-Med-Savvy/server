@@ -1,7 +1,7 @@
 package com.example.cartservice.Request;
 
 public class RequestDto {
-    String id;
+    String productId;
     String merchantId;
     Long price;
 
@@ -13,12 +13,12 @@ public class RequestDto {
         this.price = price;
     }
 
-    public String getId() {
-        return id;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getMerchantId() {
