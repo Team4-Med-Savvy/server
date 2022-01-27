@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
 @RequestMapping(value="/cart")
 public class CartController {
@@ -44,7 +45,7 @@ public class CartController {
     }
 
     @GetMapping(value="/email/{email}")
-    ResponseDto getCartByEmail(@PathVariable("email") String email){
+    ResponseDto getCartByEmail(@PathVariable(value="email") String email){
         Cart cart=cartService.findByEmail(email);
         CartDto cartDto= copyEntityToDto(cart);
         ResponseDto response=new ResponseDto();
@@ -61,14 +62,14 @@ public class CartController {
     }
 
     @PostMapping("/{email}/inc")
-    void addProduct(@PathVariable("email") String email, @RequestBody RequestDto requestDto){
+    void addProduct(@PathVariable(value="email") String email, @RequestBody RequestDto requestDto){
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){
-            if(prod.getProductId().equals(requestDto.getId())){
+            if(prod.getProductId().equals(requestDto.getProductId())){
                 prod.setQuantity(prod.getQuantity()+1);
                 break;
             }else {
-                Product product=new Product(requestDto.getId(),1,requestDto.getMerchantId(),requestDto.getPrice());
+                Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
                 cart.getProductList().add(product);
             }
 
@@ -76,8 +77,8 @@ public class CartController {
         cartService.save(cart);
     }
 
-    @PostMapping("/{email}/dec")
-    void deleteProduct(@PathVariable("email") String email,@PathVariable("id") String id){
+    @PostMapping("/{email}/{id}/dec")
+    void deleteProduct(@PathVariable(value="email") String email,@PathVariable(value = "id") String id){
         Cart cart=cartService.findByEmail(email);
         for (Product prod :cart.getProductList()){
             if(prod.getProductId().equals(id)){
