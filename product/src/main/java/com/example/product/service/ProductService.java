@@ -7,5 +7,6 @@ public interface ProductService {
     void save(Product product);
     void  delete(String id);
     Iterable<Product> findProduct(String id);
+    Product findByTitle(String title);
 
 }

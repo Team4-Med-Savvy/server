@@ -9,9 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+
     @Autowired
     ProductRepository productRepository;
 
+    @Override
+    public Product findByTitle(String title) {
+        return productRepository.findByTitle(title);
+    }
     @Override
     public Product select(String id) {
         return productRepository.findById(id).get();
