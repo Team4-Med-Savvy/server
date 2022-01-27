@@ -49,7 +49,7 @@ public class ProductController {
     List<ReponseDto> recommend()
     {
         List<ReponseDto> productDtos=new ArrayList<>();
-        String cate[]={"Covid_essential","Surgicals","Skin_care","Pet_care","Ayurvedic_care"};
+        String cate[]={"Covid_essential","Surgicals","Skin_care","Personal_care","Ayurvedic_care"};
 
         for(int i=0;i<5;i++)
         {
@@ -58,7 +58,7 @@ public class ProductController {
 
             if(size>0){
 
-            for(i=0;i<2;i++){
+            for(int j=0;j<2;j++){
             Random rand = new Random();
                 int rand_int = rand.nextInt(size);
 
