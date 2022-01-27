@@ -7,6 +7,7 @@ import com.example.userauth.entity.User;
 import com.example.userauth.services.UserServices;
 import com.example.userauth.services.feignServices.MerchantFeignService;
 import com.example.userauth.utils.JwtUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserServices userServices;
 
@@ -43,6 +45,13 @@ public class UserController {
 //        return response;
 //    }
 
+    @GetMapping("/getuser/{id}")
+    public UserDto getUser(@PathVariable(name = "id") String id){
+        User user=userServices.select(id);
+        UserDto userDto=new UserDto();
+        BeanUtils.copyProperties(user,userDto);
+        return userDto;
+    }
     @PostMapping("/authenticate")
     public ResponseDto generateToken(@RequestBody AuthDto authDto) throws Exception {
         User user;
@@ -83,7 +92,6 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setPoints(userDto.getPoints());
         user.setEmail(userDto.getEmail());
-
         return user;
     }
 
