@@ -26,7 +26,6 @@ public class ProductController {
     @Autowired
     ProductFeignService productFeignService;
 
-
     @GetMapping(value="/{id}")
     public Product select(@PathVariable(value = "id") String id){
         return productServiceImpl.select(id);
@@ -40,7 +39,7 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "/{id}")
-    void  delete(@PathVariable(value = "id") String id){
+    void delete(@PathVariable(value = "id") String id){
         productServiceImpl.delete(id);
 
     }
