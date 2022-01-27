@@ -67,11 +67,12 @@ public class ProductController {
             String productid=dto.getProductId();
             String merchantid=dto.getMerchantId();
 
-            if(productid==pid && merchantid==mid)
+            if(productid.equals(pid) && merchantid.equals(mid))
             {
                 responseMerchantDto.setMerchantId(merchantid);
                 responseMerchantDto.setProdcutId(productid);
                 responseMerchantDto.setPrice(dto.getPrice());
+                responseMerchantDto.setStock(dto.getStock());
             }
 
         }

@@ -6,6 +6,15 @@ public class ResponseMerchantDto {
     private Double price;
     private String merchantId;
     private String prodcutId;
+    private long stock;
+
+    public long getStock() {
+        return stock;
+    }
+
+    public void setStock(long stock) {
+        this.stock = stock;
+    }
 
     public Double getPrice() {
         return price;
