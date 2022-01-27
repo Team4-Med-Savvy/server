@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @GetMapping("/getuser/{id}")
-    public UserDto getUser(@PathVariable(name = "id") String id){
+    public UserDto getUser(@PathVariable(value="id") String id){
         User user=userServices.select(id);
         UserDto userDto=new UserDto();
         BeanUtils.copyProperties(user,userDto);
