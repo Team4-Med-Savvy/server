@@ -122,6 +122,7 @@ public class ProductController {
         productDetailDto.setImageUrl(product.getImage());
         productDetailDto.setDescription(product.getDescription());
         productDetailDto.setPrice(response.getPrice());
+        productDetailDto.setMerchantStock(response.getStock());
 
 
         return  productDetailDto;
