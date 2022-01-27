@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     @Autowired
     ProductService productService;
-    @Autowired
-    MerchantService merchantService;
 
     @GetMapping(value="/{idFromDT}")
     ProductDto select(@PathVariable(value = "idFromDT") Long id)
