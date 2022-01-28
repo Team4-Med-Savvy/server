@@ -9,6 +9,7 @@ public class OrderedProductsDto {
     private double amount;
     private String merchantId;
 
+
     public String getMerchantId() {
         return merchantId;
     }
