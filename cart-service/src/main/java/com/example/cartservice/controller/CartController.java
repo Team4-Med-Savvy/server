@@ -67,21 +67,27 @@ public class CartController {
     void addProduct(@PathVariable(value="email") String email, @RequestBody RequestDto requestDto){
         Cart cart=cartService.findByEmail(email);
         List<Product> result=new ArrayList<>();
+        boolean flag=false;
         if (cart.getProductList().size()>0){
         for (Product prod :cart.getProductList()){
             if(prod.getProductId().equals(requestDto.getProductId())){
                 Product product=new Product(prod.getProductId(),prod.getQuantity()+1,prod.getMerchantId(),prod.getPrice());
+                flag=true;
                 result.add(product);
             }else {
-                Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
+                Product product=new Product(prod.getProductId(),1,prod.getMerchantId(),prod.getPrice());
                 result.add(product);
             }
+        }
+        if (!flag){
+            Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
+            result.add(product);
         }
         }else{
             Product product=new Product(requestDto.getProductId(),1,requestDto.getMerchantId(),requestDto.getPrice());
             result.add(product);
         }
-        cart.setProductList( result );
+        cart.setProductList(result);
         System.out.println(result);
         cartService.save(cart);
     }
