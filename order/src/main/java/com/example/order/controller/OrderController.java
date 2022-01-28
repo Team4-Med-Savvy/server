@@ -22,7 +22,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
-@RequestMapping(value = "order")
+@RequestMapping(value = "/order")
 public class OrderController {
 
     @Autowired

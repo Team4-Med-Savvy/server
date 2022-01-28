@@ -3,7 +3,6 @@ package com.example.order.dto;
 public class OrderedProductsDto {
 
     private Long id;
-    private Long orderId;
     private String productId;
     private Long quantity;
     private double amount;
@@ -24,14 +23,6 @@ public class OrderedProductsDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
     }
 
     public String getProductId() {
