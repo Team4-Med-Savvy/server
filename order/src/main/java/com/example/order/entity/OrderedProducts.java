@@ -19,7 +19,7 @@ public class OrderedProducts {
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Orders orders;
+    private Orders ordersObject;
 
     public Long getId() {
         return id;
@@ -29,12 +29,12 @@ public class OrderedProducts {
         this.id = id;
     }
 
-    public Orders getOrders() {
-        return orders;
+    public Orders getOrdersObject() {
+        return ordersObject;
     }
 
-    public void setOrders(Orders orders) {
-        this.orders = orders;
+    public void setOrdersObject(Orders ordersObject) {
+        this.ordersObject = ordersObject;
     }
 
     public String getMerchantId() {

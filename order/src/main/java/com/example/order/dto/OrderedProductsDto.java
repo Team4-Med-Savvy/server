@@ -7,7 +7,15 @@ public class OrderedProductsDto {
     private Long quantity;
     private double amount;
     private String merchantId;
+    private Long orderId;
 
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
 
     public String getMerchantId() {
         return merchantId;
