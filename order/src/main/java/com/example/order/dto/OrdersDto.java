@@ -1,7 +1,6 @@
 package com.example.order.dto;
 
 public class OrdersDto {
-
     private Long id;
     private String userId;
     private String timeStamp;
