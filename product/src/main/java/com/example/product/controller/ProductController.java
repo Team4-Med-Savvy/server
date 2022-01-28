@@ -25,8 +25,8 @@ public class ProductController {
     ProductFeignService productFeignService;
 
     @GetMapping(value="/{id}")
-    private Product select(@PathVariable(value = "id") String id){
-        return productService.select(id);
+    private ProductDto select(@PathVariable(value = "id") String id){
+        return createDtoFromEntity(productService.select(id));
     }
 
     @RequestMapping(method ={RequestMethod.POST,RequestMethod.PUT})
@@ -130,7 +130,7 @@ public class ProductController {
         ResponseMerchantDto response=productFeignService.findProductPrice(pid,mid);
 
         ProductDetailDto productDetailDto=new ProductDetailDto();
-        ProductDto product=createDtoFromEntity(select(pid));
+        ProductDto product=select(pid);
         productDetailDto.setName(product.getTitle());
         productDetailDto.setImageUrl(product.getImage());
         productDetailDto.setDescription(product.getDescription());
@@ -142,6 +142,37 @@ public class ProductController {
 
     }
 
+
+    @GetMapping("/productdetaillist/{pid}")
+    ResponseProductDto findmerchantlist(@PathVariable(value = "pid") String pid){
+
+        ProductDto productDto=select(pid);
+        List<String> merchids=productDto.getMerchant();
+        ResponseProductDto responseProductDto=new ResponseProductDto();
+        responseProductDto.setName(productDto.getTitle());
+        responseProductDto.setDescription(productDto.getDescription());
+        responseProductDto.setImageUrl(productDto.getImage());
+
+        List<MerchantProductDetailDto> merchlist=new ArrayList<>();
+
+
+        for(int i=0;i<merchids.size();i++)
+        {
+            ProductDetailDto productDetailDto=finddetail(pid,merchids.get(i));
+           // System.out.println(merchids.get(i));
+            MerchantProductDetailDto merchprod=new MerchantProductDetailDto();
+            merchprod.setMerchantId(merchids.get(i));
+//            merchprod.setMerchantName(productDetailDto.g);
+            merchprod.setPrice(productDetailDto.getPrice());
+            merchprod.setStock(productDetailDto.getMerchantStock());
+
+            merchlist.add(merchprod);
+
+        }
+       responseProductDto.setMerchantProductDetailDtos(merchlist);
+        return  responseProductDto;
+
+    }
 
     Product createEntityFromDto(ProductDto productDto){
         Product product=new Product();
