@@ -54,7 +54,7 @@ public class CartController {
             Product product = cartDto.getProductList().get(i);
             ProductDto productDto = productFeign.select(product.getProductId());
             MerchantDto merchantDto = merchantFeign.select(product.getMerchantId());
-            ResponseProductDto productResponse=new ResponseProductDto(productDto.getTitle(), product.getPrice(), cartDto.getEmail(),product.getQuantity(),productDto.getCategory(),productDto.getImage(),merchantDto.getName(),merchantDto.getTotal_sales(),merchantDto.getPoints(),merchantDto.getId());
+            ResponseProductDto productResponse=new ResponseProductDto(productDto.getTitle(), product.getPrice(), cartDto.getEmail(),product.getQuantity(),productDto.getCategory(),productDto.getImage(),merchantDto.getName(),merchantDto.getTotal_sales(),merchantDto.getPoints(),merchantDto.getId(),productDto.getId(),i);
             list.add(productResponse);
         }
         response.setEmail(cart.getEmail());

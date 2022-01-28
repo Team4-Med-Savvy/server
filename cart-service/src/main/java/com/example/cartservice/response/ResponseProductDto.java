@@ -12,20 +12,39 @@ public class ResponseProductDto {
     private long points;
     private long total_sales;
     private String merchantId;
+    private String productId;
+    private int id;
 
 
-    public ResponseProductDto(String title, Long price, String email, int quantity, String category, String image, String name, long ranking, long total_sales, String merchantId) {
+    public ResponseProductDto(String title, Long price, String category, int quantity, String image, String name, String email, long points, long total_sales, String merchantId, String productId, int id) {
         this.title = title;
         this.price = price;
         this.category = category;
-        this.quantity=quantity;
-        this.email=email;
+        this.quantity = quantity;
         this.image = image;
-//        this.description = description;
         this.name = name;
-        this.points = ranking;
+        this.email = email;
+        this.points = points;
         this.total_sales = total_sales;
         this.merchantId = merchantId;
+        this.productId = productId;
+        this.id = id;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
