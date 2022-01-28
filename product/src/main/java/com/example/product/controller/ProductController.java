@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -64,10 +64,10 @@ public class ProductController {
     }
 
     @GetMapping(value = "/recommend")
-    List<ReponseDto> recommend()
+    private List<ReponseDto> recommend()
     {
         List<ReponseDto> productDtos=new ArrayList<>();
-        String cate[]={"Covid_essential","Surgicals","Skin_care","Personal_care","Ayurvedic_care"};
+        String cate[]={"Covid essentials","Surgical","Skin care","Pet care","Ayurvedic care"};
 
         for(int i=0;i<5;i++)
         {
@@ -96,8 +96,6 @@ public class ProductController {
     {
 //        List<ProductDto> productDtos=new ArrayList<>();
         List<ReponseDto> reponseDtos=new ArrayList<>();
-
-
         Iterable<Product> products=productService.findProduct(id);
 
         for(Product temp:products)

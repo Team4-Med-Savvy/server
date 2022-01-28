@@ -10,8 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -34,6 +35,10 @@ public class CategoryController {
     void  delete(@PathVariable(value = "id") String id){
         categoryService.delete(id);
 
+    }
+    @GetMapping()
+    private List<Category> findAll(){
+        return categoryService.findAll();
     }
 
     Category createEntityFromDto(CategoryDto categoryDto){

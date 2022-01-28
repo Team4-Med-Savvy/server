@@ -34,6 +34,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Iterable<Product> findProduct(String id) {
-        return productRepository.findBycategory(id);
+        return productRepository.findByCategory(id);
     }
 }
