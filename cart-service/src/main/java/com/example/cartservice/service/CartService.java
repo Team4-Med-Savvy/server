@@ -7,4 +7,5 @@ public interface CartService {
     Cart findById(String id);
     Cart findByEmail(String email);
     void save(Cart cart);
+    void deleteByEmail(String id);
 }

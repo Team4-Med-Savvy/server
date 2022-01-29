@@ -11,6 +11,7 @@ import com.example.cartservice.response.ResponseProductDto;
 import com.example.cartservice.service.CartService;
 import com.example.cartservice.service.feignServices.MerchantFeign;
 import com.example.cartservice.service.feignServices.ProductFeign;
+import com.example.cartservice.service.feignServices.UserFeign;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,8 @@ public class CartController {
 
     @Autowired
     MerchantFeign merchantFeign;
+    @Autowired
+    UserFeign userFeign;
 
     @RequestMapping(method={RequestMethod.POST,RequestMethod.PUT})
     void save(@RequestBody CartDto cartDto) {
@@ -88,7 +91,6 @@ public class CartController {
             result.add(product);
         }
         cart.setProductList(result);
-        System.out.println(result);
         cartService.save(cart);
     }
 
@@ -105,6 +107,13 @@ public class CartController {
                 break;
             }
         }
+        cartService.save(cart);
+    }
+
+    @PostMapping("/clear")
+    void clearCart(@RequestBody String id){
+        Cart cart = cartService.findByEmail(userFeign.getUser(id).getEmail());
+        cart.setProductList(new ArrayList<>());
         cartService.save(cart);
     }
 
