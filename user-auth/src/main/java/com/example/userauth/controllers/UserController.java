@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
+//todo : phani : usage of authorization token acorss all the api needs to be done !!
 public class UserController {
 
     @Autowired
@@ -66,8 +67,8 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/getuser/{id}")
-    public UserDto getUser(@PathVariable(value="id") String id){
+    @PostMapping("/getuser")
+    public UserDto getUser(@RequestBody String id){
         User user=userServices.select(id);
         UserDto userDto=new UserDto();
         BeanUtils.copyProperties(user,userDto);

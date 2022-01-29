@@ -2,6 +2,7 @@ package com.example.order.services.impl;
 
 import com.example.order.dto.OrderedProductsDto;
 import com.example.order.entity.OrderedProducts;
+import com.example.order.entity.Orders;
 import com.example.order.repository.OrderedProductsRepository;
 import com.example.order.services.OrderedProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class OrderedProductsServiceImpl implements OrderedProductsService {
     public void save(OrderedProducts orderedProducts) {
 
         orderedProductsRepository.save(orderedProducts);
+    }
+
+    @Override
+    public List<OrderedProducts> findByOrdersObject(Orders order) {
+        return orderedProductsRepository.findByOrdersObject(order);
     }
 
 }

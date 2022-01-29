@@ -29,6 +29,7 @@ public class ProductController {
         return createDtoFromEntity(productService.select(id));
     }
 
+    //todo : phani : why are you supporting PUT here ? and no logic exists for modifying merchant list here!!
     @RequestMapping(method ={RequestMethod.POST,RequestMethod.PUT})
     void save(@RequestBody RequestDto productDto){
         Product product=new Product();
@@ -63,6 +64,8 @@ public class ProductController {
 
     }
 
+    //todo : phani : This should be based on query from Mongo, supports based on query of nested collections
+    // need to use limit criterian from the query level itself
     @GetMapping(value = "/recommend")
     private List<ReponseDto> recommend()
     {
@@ -109,6 +112,8 @@ public class ProductController {
             for(int i=0;i<temp.getMerchant().size();i++){
 
                // System.out.println(temp.getMerchant().get(i));
+                // todo : phani .. instead of firing request to get each merchant, use the bulk api to fetch details by list of mechant ids
+                // need to implement findAllById on Merchant service to achieve this
                 MerchantDto merchantDto=productFeignService.findById(temp.getMerchant().get(i));
                 merchantlist.add(merchantDto);
             }
@@ -122,6 +127,7 @@ public class ProductController {
 
 
 
+    // todo : phani to review this api usage from the mobile / web ui!
     @GetMapping("/productdetail/{pid}/{mid}")
     ProductDetailDto finddetail(@PathVariable(value = "pid") String pid,@PathVariable(value = "mid") String mid){
 

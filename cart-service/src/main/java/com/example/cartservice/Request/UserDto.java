@@ -1,4 +1,4 @@
-package com.example.emailservice.dto;
+package com.example.cartservice.Request;
 
 public class UserDto {
     private String id;
