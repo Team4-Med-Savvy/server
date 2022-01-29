@@ -8,7 +8,7 @@ public class RequestDto {
     private String userId;
     private String timeStamp;
     private Long total;
-    List<OrderedProductsDto> products;
+    private List<OrderedProductsDto> products;
 
     public String getUserId() {
         return userId;
