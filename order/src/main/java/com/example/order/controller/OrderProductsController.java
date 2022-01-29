@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(value = "orderedproducts")
 public class OrderProductsController {
@@ -25,10 +25,8 @@ public class OrderProductsController {
 
 
     @RequestMapping(method = {RequestMethod.POST,RequestMethod.PUT})
-    void save(@RequestBody OrderedProductsDto orderedProductsDto){
-        OrderedProducts orderedProducts = new OrderedProducts();
-        BeanUtils.copyProperties(orderedProductsDto,orderedProducts);
-        orderedProductsService.save(orderedProducts);
+    void save(@RequestBody OrderedProducts orderedProductsDto){
+        orderedProductsService.save(orderedProductsDto);
     }
 
 }

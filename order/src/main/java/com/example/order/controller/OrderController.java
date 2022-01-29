@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
@@ -73,18 +73,23 @@ public class OrderController {
             BeanUtils.copyProperties(orderDto,order);
             orderService.save(order);
 
-            OrderedProducts orderedProducts=new OrderedProducts();
-            BeanUtils.copyProperties(orderDto,orderedProducts);
-            orderedProducts.setOrders(order);
-            orderedProductsService.save(orderedProducts);
-
             for(OrderedProductsDto product : orderDto.getProducts()){
+                OrderedProducts orderedProducts=new OrderedProducts();
+                orderedProducts.setOrdersObject(order);
+                orderedProducts.setProductId(product.getProductId());
+                orderedProducts.setMerchantId(product.getMerchantId());
+                orderedProducts.setAmount(product.getAmount());
+                orderedProducts.setQuantity(product.getQuantity());
+                System.out.println("HERE "+product.getProductId());
+                orderedProductsService.save(orderedProducts);
+
                 ResponseMerchantDto productDto=merchantFeign.findProductPrice(product.getProductId(),product.getMerchantId());
                 productDto.setStock(productDto.getStock()-product.getQuantity());
                 merchantFeign.save(productDto);
             }
             emailFeign.sendMail(new EmailDto("","Order Succesfully Placed!!","You have ordered "+ prods +"from Med-Savvy and it will be delivered to you shortly \n Thank you",orderDto.getUserId()));
             cartFeign.clear(orderDto.getUserId());
+
         }catch(Exception e){
             System.out.println(e);
         }

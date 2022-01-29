@@ -67,7 +67,7 @@ public class ProductController {
     private List<ReponseDto> recommend()
     {
         List<ReponseDto> productDtos=new ArrayList<>();
-        String cate[]={"Covid essentials","Surgical","Skin care","Pet care","Ayurvedic care"};
+        String cate[]={"Covid_essentials","Surgical","Skin_care","Pet_care","Ayurvedic_care"};
 
         for(int i=0;i<5;i++)
         {
