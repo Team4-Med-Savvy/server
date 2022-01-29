@@ -19,6 +19,7 @@ public class EmailController {
 
     @PostMapping()
     void sendMail(@RequestBody EmailDto emailDto){
+        System.out.println("EMAILHERE "+emailDto.getUserId());
         UserDto userDto=userFeign.getUser(emailDto.getUserId());
         emailService.sendSimpleMessage(userDto.getEmail(),emailDto.getSubject(),emailDto.getMessage());
     }
