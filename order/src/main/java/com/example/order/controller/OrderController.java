@@ -84,7 +84,7 @@ public class OrderController {
                 productDto.setStock(productDto.getStock()-product.getQuantity());
                 merchantFeign.save(productDto);
             }
-//            emailFeign.sendMail(new EmailDto("","Order Succesfully Placed!!","You have ordered "+ prods +"from Med-Savvy and it will be delivered to you shortly \n Thank you",orderDto.getUserId()));
+            emailFeign.sendMail(new EmailDto("","Order Succesfully Placed!!","You have ordered "+ prods +"from Med-Savvy and it will be delivered to you shortly \n Thank you",orderDto.getUserId()));
 
         }catch(Exception e){
             System.out.println(e);

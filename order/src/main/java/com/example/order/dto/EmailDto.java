@@ -5,6 +5,7 @@ public class EmailDto {
     private String subject;
     private String message;
     private String userId;
+
     public EmailDto(String toAddress, String subject, String message,String userId) {
         this.toAddress = toAddress;
         this.subject = subject;
