@@ -10,6 +10,7 @@ import com.example.order.entity.OrderedProducts;
 import com.example.order.entity.Orders;
 import com.example.order.services.OrderedProductsService;
 import com.example.order.services.OrdersService;
+import com.example.order.services.feignServices.CartFeign;
 import com.example.order.services.feignServices.EmailFeign;
 import com.example.order.services.feignServices.MerchantFeign;
 import com.example.order.services.feignServices.ProductFeign;
@@ -40,6 +41,9 @@ public class OrderController {
     @Autowired
     private MerchantFeign merchantFeign;
 
+    @Autowired
+    private CartFeign cartFeign;
+
     @GetMapping(value = "/user/{id}")
     List<OrdersDto> findUserOrders(@PathVariable("id") String id){
         List<Orders> list= orderService.findByUserId(id);
@@ -62,7 +66,7 @@ public class OrderController {
                 if (productDto.getMerchantStock()<product.getQuantity()){
                     throw new Exception(product.getProductId()+" Out of stock");
                 }else{
-                    prods+=productDto.getName()+", ";
+                    prods += productDto.getName()+", ";
                 }
             }
             Orders order = new Orders();
@@ -80,7 +84,7 @@ public class OrderController {
                 merchantFeign.save(productDto);
             }
             emailFeign.sendMail(new EmailDto("","Order Succesfully Placed!!","You have ordered "+ prods +"from Med-Savvy and it will be delivered to you shortly \n Thank you",orderDto.getUserId()));
-
+            cartFeign.clear(orderDto.getUserId());
         }catch(Exception e){
             System.out.println(e);
         }
