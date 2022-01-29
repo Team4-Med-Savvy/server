@@ -20,6 +20,7 @@ import java.util.Date;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/user")
+//todo : phani : usage of authorization token acorss all the api needs to be done !!
 public class UserController {
 
     @Autowired
